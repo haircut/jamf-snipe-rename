@@ -39,7 +39,7 @@ TOKEN_PASSPHRASE = ""
 
 def get_hostname_from_snipe(serial, token):
     """Returns the hostname for the device in Snipe"""
-    q = f"{SNIPE_SERVER}/v1/hardware/byserial/{serial}"
+    q = f"{SNIPE_SERVER}/api/v1/hardware/byserial/{serial}"
     auth = f"Bearer {token}"
     response = requests.get(
         q, headers={"Accept": "application/json", "Authorization": auth}
@@ -111,7 +111,7 @@ def decrypt_token(input_token):
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
     )
-    return proc.communicate(input_token)[0].strip().decode("UTF-8")
+    return proc.communicate(str.encode(input_token))[0].strip().decode("UTF-8")
 
 
 def main():
